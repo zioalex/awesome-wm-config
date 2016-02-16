@@ -264,7 +264,7 @@ end
 
 --{{
 local tools = {
-    terminal = "sakura",
+    terminal = "terminator",
     system = {
         filemanager = "pcmanfm",
         taskmanager = "lxtask",
@@ -359,7 +359,7 @@ end
 -- {{{ Customized functions
 
 customization.func.system_lock = function ()
-  awful.util.spawn("xscreensaver-command -l")
+  awful.util.spawn("gnome-screensaver-command -l")
 end
 
 customization.func.system_suspend = function ()
@@ -1679,7 +1679,7 @@ customization.widgets.volume = wibox.widget.textbox()
 vicious.register(customization.widgets.volume, vicious.widgets.volume,
   "<span fgcolor='cyan'>$1%$2</span>", 1, "Master")
 do
-    local prog="gnome-alsamixer"
+    local prog="pavucontrol"
     local started=false
     customization.widgets.volume:buttons(awful.util.table.join(
     awful.button({ }, 1, function ()
@@ -2242,7 +2242,7 @@ uniarg:key_repeat({ modkey, "Shift" }, "b", function ()
 end),
 
 uniarg:key_repeat({ modkey, "Mod1", }, "v", function ()
-    awful.util.spawn("virtualbox")
+    awful.util.spawn("VirtualBox")
 end),
 
 uniarg:key_repeat({modkey, "Shift" }, "\\", function() 
@@ -2275,7 +2275,23 @@ function (n)
   awful.util.spawn("amixer sset Master " .. n .. "%+")
 end),
 
+uniarg:key_numarg({modkey, "Control", }, "#86",
+function ()
+  awful.util.spawn("amixer sset Master 5%+")
+end,
+function (n)
+  awful.util.spawn("amixer sset Master " .. n .. "%+")
+end),
+
 uniarg:key_numarg({}, "XF86AudioLowerVolume",
+function ()
+  awful.util.spawn("amixer sset Master 5%-")
+end,
+function (n)
+  awful.util.spawn("amixer sset Master " .. n .. "%-")
+end),
+
+uniarg:key_numarg({modkey, "Control", }, "#82",
 function ()
   awful.util.spawn("amixer sset Master 5%-")
 end,
@@ -2292,7 +2308,7 @@ awful.key({}, "XF86AudioMicMute", function ()
 end),
 
 awful.key({}, "XF86ScreenSaver", function ()
-    awful.util.spawn("xscreensaver-command -l")
+    awful.util.spawn("gnome-screensaver-command -l")
 end),
 
 awful.key({}, "XF86WebCam", function ()
@@ -2323,8 +2339,24 @@ awful.key({}, "XF86Display", function ()
     awful.util.spawn("arandr")
 end),
 
+awful.key({modkey, "Mod1", }, "0", function ()
+    awful.util.spawn("monitor.sh laptop")
+end),
+
+awful.key({modkey, "Mod1", }, "9", function ()
+    awful.util.spawn("monitor.sh office")
+end),
+
+awful.key({modkey, "Mod1", }, "8", function ()
+    awful.util.spawn("monitor.sh home")
+end),
+
 awful.key({}, "Print", function ()
-    awful.util.spawn("xfce4-screenshooter")
+    awful.util.spawn("xfce4-screenshooter -s /home/asurace/Pictures/ -f -d 0")
+end),
+
+awful.key({modkey, }, "Print", function ()
+    awful.util.spawn("xfce4-screenshooter -s /home/asurace/Pictures/  -r -d 0")
 end),
 
 uniarg:key_repeat({}, "XF86Launch1", function ()
@@ -2366,8 +2398,8 @@ uniarg:key_repeat({ modkey, "Control" }, "Right", function ()
     awful.util.spawn("mpc next")
 end),
 
-awful.key({ modkey, "Control" }, "Up", function ()
-    awful.util.spawn("gnome-alsamixer")
+awful.key({ modkey, "Control" }, "s", function ()
+    awful.util.spawn("pavucontrol")
 end),
 
 uniarg:key_numarg({ modkey, "Shift" }, "Left",
@@ -2400,6 +2432,15 @@ function ()
 end,
 function (n)
   awful.util.spawn("mpc seek +" .. n .. "%")
+end),
+
+--- OAUTH KEY
+awful.key({modkey , "Shift" },  "F12", function ()
+    awful.util.spawn("bash -c '/usr/local/bin/oathtool --totp -b A6GGOTW4IJ6RDDB4GLLFO5NTYESNYI2KWTQNFWU6X37UE6VPBHLV3AES5J2AI6DH | xsel -i'")
+end),
+
+awful.key({modkey , "Shift" },  "F11", function ()
+    awful.util.spawn("bash -c '/usr/local/bin/oathtool --totp -b 6OFFIXC5EKEZ7J6ZLN5IH44XRXCSQQO5WJDV4FUBPINTXTT2EZSVPDE3OA4M2V6X | xsel -i'")
 end),
 
 nil
