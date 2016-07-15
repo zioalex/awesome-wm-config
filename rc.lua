@@ -2359,6 +2359,14 @@ awful.key({modkey, }, "Print", function ()
     awful.util.spawn("xfce4-screenshooter -s /home/asurace/Pictures/  -r -d 0")
 end),
 
+awful.key({modkey, "Shift"}, "Print", function ()
+    awful.util.spawn("xfce4-screenshooter -s /home/asurace/Pictures/  -w -d 0")
+end),
+
+awful.key({modkey, "Mod1", "Shift"}, "r", function ()
+    awful.util.spawn("gtk-recordMyDesktop")
+end),
+
 uniarg:key_repeat({}, "XF86Launch1", function ()
     awful.util.spawn(tools.terminal)
 end),
@@ -2400,6 +2408,10 @@ end),
 
 awful.key({ modkey, "Control" }, "s", function ()
     awful.util.spawn("pavucontrol")
+end),
+
+awful.key({ modkey, "Mod1"},  "s", function () 
+    awful.util.spawn("tracker-needle") 
 end),
 
 uniarg:key_numarg({ modkey, "Shift" }, "Left",
