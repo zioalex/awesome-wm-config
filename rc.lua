@@ -1549,6 +1549,7 @@ customization.widgets.cpuusage:set_color({
   type = "linear", from = { 0, 0 }, to = { 10,0 }, 
   stops = { {0, "#FF5656"}, {0.5, "#88A175"}, {1, "#AECF96" }}})
 vicious.register(customization.widgets.cpuusage, vicious.widgets.cpu, "$1", 5)                   
+
 do
     local prog=tools.system.taskmanager
     local started=false
@@ -1633,44 +1634,6 @@ do
             awful.util.spawn(prog)
         end
         started=not started
-    end)
-    ))
-end
-
-customization.widgets.mpdstatus = wibox.widget.textbox()
-customization.widgets.mpdstatus:set_ellipsize("end")
-vicious.register(customization.widgets.mpdstatus, vicious.widgets.mpd,
-  function (mpdwidget, args)
-    local text = nil
-    local state = args["{state}"]
-    if state then
-      if state == "Stop" then 
-        text = ""
-      else 
-        text = args["{Artist}"]..' - '.. args["{Title}"]
-      end
-      return '<span fgcolor="light green"><b>[' .. state .. ']</b> <small>' .. text .. '</small></span>'
-    end
-    return ""
-  end, 1)
--- http://git.sysphere.org/vicious/tree/README
-customization.widgets.mpdstatus = wibox.layout.constraint(customization.widgets.mpdstatus, "max", 180, nil)
-do
-    customization.widgets.mpdstatus:buttons(awful.util.table.join(
-    awful.button({ }, 1, function ()
-        awful.util.spawn("mpc toggle")
-    end),
-    awful.button({ }, 2, function ()
-        awful.util.spawn("mpc prev")
-    end),
-    awful.button({ }, 3, function ()
-        awful.util.spawn("mpc next")
-    end),
-    awful.button({ }, 4, function ()
-        awful.util.spawn("mpc seek -1%")
-    end),
-    awful.button({ }, 5, function ()
-        awful.util.spawn("mpc seek +1%")
     end)
     ))
 end
@@ -1834,7 +1797,7 @@ for s = 1, screen.count() do
     right_layout:add(customization.widgets.cpuusage)
     right_layout:add(customization.widgets.memusage)
     right_layout:add(customization.widgets.bat)
-    right_layout:add(customization.widgets.mpdstatus)
+    --right_layout:add(customization.widgets.mpdstatus)
     --right_layout:add(customization.widgets.audio_volume)
     right_layout:add(customization.widgets.volume)
     right_layout:add(customization.widgets.date)
@@ -2810,6 +2773,7 @@ client.connect_signal("manage", function (c, startup)
         -- Widgets that are aligned to the left
         local left_layout = wibox.layout.fixed.horizontal()
         left_layout:add(awful.titlebar.widget.iconwidget(c))
+        -- left_layout:add(customization.func.client_sideline_left)
         left_layout:buttons(buttons)
 
         -- Widgets that are aligned to the right
@@ -2836,7 +2800,7 @@ client.connect_signal("manage", function (c, startup)
         awful.titlebar(c):set_widget(layout)
 
         -- hide the titlebar by default (it takes space)
-        awful.titlebar.hide(c)
+        -- awful.titlebar.hide(c)
 
     end
 
