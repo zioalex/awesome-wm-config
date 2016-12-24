@@ -2411,11 +2411,11 @@ end),
 
 --- OAUTH KEY
 awful.key({modkey , "Shift" },  "F12", function ()
-    awful.util.spawn("bash -c '/usr/local/bin/oathtool --totp -b A6GGOTW4IJ6RDDB4GLLFO5NTYESNYI2KWTQNFWU6X37UE6VPBHLV3AES5J2AI6DH | xsel -i'")
+    awful.util.spawn("bash  -l -c '. ~/.bashrc_secret; mfaMDSPRD | xsel -i'")
 end),
 
 awful.key({modkey , "Shift" },  "F11", function ()
-    awful.util.spawn("bash -c '/usr/local/bin/oathtool --totp -b 6OFFIXC5EKEZ7J6ZLN5IH44XRXCSQQO5WJDV4FUBPINTXTT2EZSVPDE3OA4M2V6X | xsel -i'")
+    awful.util.spawn("bash  -l -c '. ~/.bashrc_secret; mfaMDSDEV | xsel -i'")
 end),
 
 nil
